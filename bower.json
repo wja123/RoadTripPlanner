@@ -1,0 +1,25 @@
+{
+  "name": "hw6-20",
+  "description": "",
+  "main": "",
+  "authors": [
+    "wja123 <w.j.alag@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.3",
+    "jquery": "^2.2.2",
+    "angular-ui-router": "^0.2.18",
+    "bootstrap": "^3.3.6"
+  }
+}
