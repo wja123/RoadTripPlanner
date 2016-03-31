@@ -5,8 +5,37 @@ var app = angular.module('travelApp');
 app.factory('UserFactory', function($http){
   console.log("factory");
 
-  return{
+  function registerUser(user){
+    return $http.post('/users/register', user);
+  }
 
+  function loginUser(user){
+    return $http.put('/users/authenticate', user);
+  }
+
+  function getDestinations(){
+    return $http.get('/destinations');
+  }
+
+  function addDestinations(destination){
+    return $http.post('/destinations', destination);
+  }
+
+  function editDestinations(destination){
+    return $http.put(`/destinations/edit/${destination._id}`, destination);
+  }
+
+  function removeDestinations(id){
+    return $http.delete(`/destinations/${id}`);
+  }
+
+  return{
+      registerUser:registerUser,
+      loginUser:loginUser,
+      getDestinations:getDestinations,
+      addDestinations:addDestinations,
+      editDestinations:editDestinations,
+      removeDestinations:removeDestinations
   }
 
 });
@@ -14,8 +43,8 @@ app.factory('UserFactory', function($http){
 app.factory('MapFactory', function($http, UserFactory){
   console.log("map factory");
 
-  return {
 
+
+  return {
   }
 });
-

@@ -1,0 +1,33 @@
+<div ng-controller="mapCtrl">
+
+  <div id="floating-panel" >
+    <input id="address" type="textbox" ng-model="destinations.destination" placeholder="address">
+    <input id="description" type="textbox" ng-model="destinations.description" placeholder="description">
+    <input id="submit" type="button" value="Add Destination" ng-click="addDestination()">
+  </div>
+  <div id="map"></div>
+  <div id="card-container">
+    <div class="row">
+        <div class="col s12">
+
+  <ul class="collapsible" data-collapsible="accordion">
+    <li ng-repeat ="destination in addressList track by $index">
+      <div class="collapsible-header"><i class="material-icons info">info_outline</i>       
+{{destination.destination}} </div>
+      <div class="collapsible-body">
+        <span ng-show="!editing"><p>{{destination.description}}</p></span>
+        <span ng-show="editing"><p><input type="text" ng-model="destination.description"></p>
+                
+        <i class="material-icons cursor" ng-click="updateDestination(destination)">done</i></span>
+                
+      </p>
+      <i class="material-icons cursor" id="edit" ng-click="editDestination(destination._id)">mode_edit</i>
+              <i class="material-icons cursor" ng-click="removeDestination(destination._id)">delete</i>
+      </div>
+
+    </li>
+  </ul>
+      </div>
+    </div>
+  </div>
+</div>

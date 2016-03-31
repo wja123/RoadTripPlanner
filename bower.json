@@ -7,7 +7,7 @@
   ],
   "license": "MIT",
   "moduleType": [],
-  "homepage": "",
+  "homepage": "https://github.com/wja123/RoadTripPlanner",
   "ignore": [
     "**/.*",
     "node_modules",

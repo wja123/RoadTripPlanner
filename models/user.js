@@ -6,6 +6,7 @@ var jwt = require("jwt-simple");
 var Schema = mongoose.Schema;
 
 var User;
+var Destination = require('../models/destination');
 
 const JWT_SECRET = 'this is some real wicked secret. bloody hell! this is brilliant!';
 
@@ -23,7 +24,7 @@ var userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    destinations: [{type: Schema.Types.Mixed}]
+    destinations: [{type: Schema.Types.ObjectId, ref:'Destination'}]
 });
 
 
@@ -32,7 +33,7 @@ userSchema.statics.register = function(userObj, cb) {
 
         if (err){
           return cb(err);
-        } 
+        }
         User.create({
             username: userObj.password,
             password: hash
@@ -53,7 +54,7 @@ userSchema.statics.authenticate = function(userObj, cb) {
     }, function(err, dbUser) {
         if (err || !dbUser){
           cb(err || "Authentication Failed!");
-        } 
+        }
 
         bcrypt.compare(userObj.password, dbUser.password, function(err, isGood) {
             if (err || !isGood) {

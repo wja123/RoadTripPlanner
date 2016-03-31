@@ -1,21 +1,73 @@
  html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }ß
+  background-color:#222;
+   height: 100%;
+   margin: 0;
+   padding: 0;
+ }
+ /*#map {
+   height: 100%;
+ }*/
+ #floating-panel {
+   position: absolute;
+   top: 10px;
+   left: 25%;
+   z-index: 5;
+   background-color: #fff;
+   padding: 5px;
+   border: 1px solid #999;
+   text-align: center;
+   font-family: 'Roboto', 'sans-serif';
+   line-height: 30px;
+   padding-left: 10px;
+ }
+ form {
+   position: absolute;
+   z-index: 6;
+   width:100%;
+ }
+
+ #map {
+     height:100vh;
+     width:auto;
+ }
+
+#card-container{
+  position:absolute;
+  z-index:100;
+  right:0;
+  top:0;
+  height:100vh;
+  width:30%;
+}
+.collapsible {
+  background-color: #fff;
+  border-radius:7px;
+}
+
+.collapsible .collapsible-header {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.collapsible .collapsible-header li {
+  border:none;
+}
+#edit {
+  width:20px;
+}
+.cursor {
+  cursor:pointer;
+}
+
+form {
+  margin-top:25%;
+  color:#fff;
+}
+button#register {
+  padding:5px;
+  width:10%;
+  border-radius:3px;
+  background-color: #fff;
+  color:#222;
+  border:none;
+  cursor:pointer;
+}

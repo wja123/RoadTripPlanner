@@ -10,26 +10,31 @@ var Destination = require('../models/destination');
 
 router.get('/', User.authMiddleware, function(req, res) {
 
-    User.findById(req.user._id, function(err, user) {
+    User.findById(req.user._id)
+    .populate('destinations')
+    .exec(function(err, user) {
         res.send(user.destinations);
     });
 
 }); // end get
 
 router.post('/', User.authMiddleware, function(req, res) {
+    console.log(req.body);
 
-    User.findById(
-        req.user._id, function(err, user) {
-            user.destinations.push(req.body.destinations);
-            user.save(function(err, savedUser) {
-                if (err) res.status(400).send(err);
-                savedUser.password = null;
-                res.send(savedUser);
-
-            });
-        });
+    Destination.create(req.body, function(err, destination){
+      User.findById(
+          req.user._id, function(err, user) {
+              user.destinations.push(destination);
+              user.save(function(err, savedUser) {
+                  if (err) res.status(400).send(err);
+                  savedUser.password = null;
+                  res.send(savedUser);
+              });
+          });
+    });
 
 }); // end get
+
 
 router.put('/insert/:index', User.authMiddleware, function(req, res) {
     if (req.params.index >= 0 && req.params.index <= req.user.destinations.length) {
@@ -46,22 +51,23 @@ router.put('/insert/:index', User.authMiddleware, function(req, res) {
     }
 });
 
-router.put('/edit/:index', User.authMiddleware, function(req, res){
-  User.findById(req.user._id, function(err, user){
-    user.destinations[req.params.index] = req.body.destinations;
-    user.save(function(err, savedUser){
+router.put('/edit/:id', User.authMiddleware, function(req, res){
+  console.log(req.body);
+    Destination.findOneAndUpdate({'_id': req.params.id}, req.body, function(err, destination){
       if (err) res.status(400).send(err);
-        res.send(savedUser);
+        res.send(destination);
     });
-  });
 });
 
-router.delete('/:index', User.authMiddleware, function(req, res) {
+router.delete('/:id', User.authMiddleware, function(req, res) {
     User.findById(req.user._id, function(err, user) {
-        user.destinations.splice(req.params.index, 1);
+        user.destinations.splice(user.destinations.indexOf(req.params.id), 1);
         user.save(function(err, savedUser) {
             if (err) res.status(400).send(err);
-            res.send(savedUser);
+            Destination.findOneAndRemove({'_id': req.params.id}, function(err, destination){
+              if (err) res.status(400).send('destination remove error');
+              res.send(savedUser);
+            });
         });
     });
 });
