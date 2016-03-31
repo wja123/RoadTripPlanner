@@ -15,7 +15,7 @@ app.controller('authCtrl', function($scope, $state, UserFactory) {
                 .then(function(res) {
                     $state.go('login');
                 }, function(err) {
-
+                    console.log("Login Error!");
                 });
         } else if ($scope.state.name === "login") {
 
@@ -33,14 +33,15 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
     console.log("map ctrl");
     $(document).ready(function() {
         $('.collapsible').collapsible({
-            accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+            accordion: false
         });
     });
 
     var addressArray;
     var address;
     var newDestinationObject = {};
-    $scope.markers =[];
+    var dirData;
+    $scope.markers = [];
 
     $scope.map = new google.maps.Map(document.getElementById('map'), {
         zoom: 3,
@@ -54,10 +55,27 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
     $scope.$watch(function() {
         return addressArray;
     }, function(curr, prev) {
-      console.log(curr);
+        console.log(curr);
         $scope.addressList = curr;
     });
 
+//THE DIRECTIONS RETURN THE DATA, HOWEVER, HAVING AN ISSUE 
+// WITH THE HEADERS, DO NOT UNCOMMENT PRIOR TO SUBMISSION
+
+    // $scope.$watch(function() {
+    //     return $scope.addressList;
+    // }, function(curr, prev) {
+    //     if (!dirData) {
+    //         UserFactory.getDirections(curr).then(function(res) {
+    //             console.log("Directions: ", res.data);
+    //             dirData = res.data;
+    //         }, function(err) {
+    //             console.log("Directions error: ", err);
+    //         });
+    //     };
+    // });
+
+////////////////////////////////////////////
     var geocoder = new google.maps.Geocoder();
 
     renderDestinations();
@@ -76,11 +94,12 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
         address = address || [];
         console.log("address", address);
 
+
+
         for (var i = 0; i < addressArray.length; i++) {
             address = addressArray[i].destination;
             console.log("lat:", addressArray[i].lat);
             console.log("lng:", addressArray[i].lng);
-            //geocodeAddress(geocoder, $scope.map);
             var myLatlng = new google.maps.LatLng(addressArray[i].lat, addressArray[i].lng);
             var marker = new google.maps.Marker({
                 position: myLatlng,
@@ -89,7 +108,7 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
             });
 
             $scope.map.panTo(marker.getPosition());
-                $scope.markers.push(marker);
+            $scope.markers.push(marker);
         }
 
     } //end initMap function
@@ -105,8 +124,6 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
                     position: results[0].geometry.location
                 });
                 $scope.markers.push(marker);
-                console.log("results", results);
-                console.log("marker: ", marker);
                 if (newDestinationObject) {
                     newDestinationObject.lng = results[0].geometry.location.lng();
                     newDestinationObject.lat = results[0].geometry.location.lat();
@@ -120,18 +137,16 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
                             console.error("add destinations error: ", err);
                         });
                 }
-
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         });
     }
 
-
     $scope.addDestination = function() {
         newDestinationObject = angular.copy($scope.destinations);
         address = $scope.destinations.destination;
-        $scope.destinations ={};
+        $scope.destinations = {};
         console.log(newDestinationObject);
         geocodeAddress(geocoder, $scope.map);
     }
@@ -140,20 +155,19 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
 
     $scope.editing = false;
 
-    $scope.editDestination = function(destination){
-      $scope.editing = true;
+    $scope.editDestination = function(destination) {
+        $scope.editing = true;
     }
 
-    $scope.updateDestination = function(destination){
-      console.log("destination update: ", destination);
-      UserFactory.editDestinations(destination)
-      .then(function(res){
-        console.log("edit res", res.data);
-      }, function(err){
-        console.error("update error: ", err);
-      });
+    $scope.updateDestination = function(destination) {
+        console.log("destination update: ", destination);
+        UserFactory.editDestinations(destination)
+            .then(function(res) {
+                $scope.editing = false;
+            }, function(err) {
+                console.error("update error: ", err);
+            });
     }
-
 
     $scope.removeDestination = function(destination) {
         console.log("remove destination id: ", destination);
@@ -167,25 +181,25 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
             });
     }
 
-function clearMarkers() {
-  setMapOnAll(null);
-}
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
 
-// Shows any markers currently in the array.
-function showMarkers() {
-  setMapOnAll($scope.map);
-}
+    // Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll($scope.map);
+    }
 
-function setMapOnAll(map) {
-  for (var i = 0; i < $scope.markers.length; i++) {
-    $scope.markers[i].setMap(map);
-  }
-}
+    function setMapOnAll(map) {
+        for (var i = 0; i < $scope.markers.length; i++) {
+            $scope.markers[i].setMap(map);
+        }
+    }
 
-function deleteMarkers() {
-  clearMarkers();
-  $scope.markers = [];
-}
+    function deleteMarkers() {
+        clearMarkers();
+        $scope.markers = [];
+    }
 
 });
 
