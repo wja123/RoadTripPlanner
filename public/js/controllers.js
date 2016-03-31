@@ -44,12 +44,14 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
       lat: -34.397,
       lng: 150.644
     },
-    styles: mapStyle2
+    styles: mapStyle1
   });
 
   var geocoder = new google.maps.Geocoder();
 
 renderDestinations();
+
+
 
 
 function renderDestinations(){
