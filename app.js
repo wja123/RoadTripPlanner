@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 
 var app = express();
 
-const mongoDBUrl = 'mongodb://localhost/travelApp';
+const mongoDBUrl = (process.env.MONGOLAB_URI ||'mongodb://localhost/travelApp');
 
 mongoose.connect(mongoDBUrl, function(err){
   if (err){
