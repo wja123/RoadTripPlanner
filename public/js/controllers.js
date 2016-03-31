@@ -143,11 +143,18 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
         });
     }
 
+    $scope.logout = function(){
+        UserFactory.logOut().then(function(res){
+            $state.go("login");
+        },function(err){
+            console.log("Can't Sign Out!");
+        });
+    }
+
     $scope.addDestination = function() {
         newDestinationObject = angular.copy($scope.destinations);
         address = $scope.destinations.destination;
         $scope.destinations = {};
-        console.log(newDestinationObject);
         geocodeAddress(geocoder, $scope.map);
     }
 

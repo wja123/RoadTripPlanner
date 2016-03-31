@@ -12,10 +12,10 @@
         placeholder="confirm password" required>
 
         <button id="register" type="submit" ng-disabled="(authForm.$invalid === true) || (user.password !== user.passwordConfirm && state.name==='register')">{{state.name}}</button>
-        <bu
-              
+        <a ui-sref="login" ng-if="state.name === 'register'">Already Registered</a>
+    
       </form>
-
+        
     </div>
 
   </div>

@@ -13,6 +13,10 @@ app.factory('UserFactory', function($http) {
         return $http.put('/users/authenticate', user);
     }
 
+    function logOut() {
+        return $http.delete('/users/signout');
+    }
+
     function getDestinations() {
         return $http.get('/destinations');
     }
@@ -44,7 +48,8 @@ app.factory('UserFactory', function($http) {
         addDestinations: addDestinations,
         editDestinations: editDestinations,
         removeDestinations: removeDestinations,
-        getDirections:getDirections
+        getDirections:getDirections,
+        logOut:logOut
     }
 
 });
