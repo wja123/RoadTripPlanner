@@ -1,0 +1,10 @@
+<div ng-controller="mapCtrl">
+
+  <div id="floating-panel" >
+    <input id="address" type="textbox" ng-model="destinations.destination" placeholder="address">
+    <input id="description" type="textbox" ng-model="destinations.description" placeholder="description">
+    <input id="submit" type="button" value="Add Destination" ng-click="addDestination()">
+  </div>
+  <div id="map"></div>
+  <div id="card-container"></div>
+</div>

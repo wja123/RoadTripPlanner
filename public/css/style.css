@@ -1,21 +1,40 @@
  html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }ß
+   height: 100%;
+   margin: 0;
+   padding: 0;
+ }
+ /*#map {
+   height: 100%;
+ }*/
+ #floating-panel {
+   position: absolute;
+   top: 10px;
+   left: 25%;
+   z-index: 5;
+   background-color: #fff;
+   padding: 5px;
+   border: 1px solid #999;
+   text-align: center;
+   font-family: 'Roboto', 'sans-serif';
+   line-height: 30px;
+   padding-left: 10px;
+ }
+ form {
+   position: absolute;
+   z-index: 6;
+   width:100%;
+ }
+
+ #map {
+     height:100vh;
+     width:auto;
+ }
+
+#card-container{
+  position:absolute;
+  z-index:100;
+  right:0;
+  height:100vh;
+  width:25%;
+  background-color: rgbaa(0,0,0,0.5);
+}

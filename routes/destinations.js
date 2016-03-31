@@ -10,26 +10,31 @@ var Destination = require('../models/destination');
 
 router.get('/', User.authMiddleware, function(req, res) {
 
-    User.findById(req.user._id, function(err, user) {
+    User.findById(req.user._id)
+    .populate('destinations')
+    .exec(function(err, user) {
         res.send(user.destinations);
     });
 
 }); // end get
 
 router.post('/', User.authMiddleware, function(req, res) {
+    console.log(req.body);
 
-    User.findById(
-        req.user._id, function(err, user) {
-            user.destinations.push(req.body.destinations);
-            user.save(function(err, savedUser) {
-                if (err) res.status(400).send(err);
-                savedUser.password = null;
-                res.send(savedUser);
-
-            });
-        });
+    Destination.create(req.body, function(err, destination){
+      User.findById(
+          req.user._id, function(err, user) {
+              user.destinations.push(destination);
+              user.save(function(err, savedUser) {
+                  if (err) res.status(400).send(err);
+                  savedUser.password = null;
+                  res.send(savedUser);
+              });
+          });
+    });
 
 }); // end get
+
 
 router.put('/insert/:index', User.authMiddleware, function(req, res) {
     if (req.params.index >= 0 && req.params.index <= req.user.destinations.length) {

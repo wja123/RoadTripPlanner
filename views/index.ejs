@@ -8,26 +8,24 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link rel="stylesheet" href="/css/style.css">
-  
+
+
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmJlLCNOIJKSZCteYCGfd_z--fMXDRchE&extension=.js">
+    </script>
     <script src="/js/module.js"></script>
     <script src="/js/controllers.js"></script>
     <script src="/js/factories.js"></script>
-
     <script src="/js/main.js"></script>
+
   </head>
-  <body>
-    <div id="floating-panel">
-      <input id="address" type="textbox" value="Sydney, NSW">
-      <input id="submit" type="button" value="Geocode">
-    </div>
-    <div id="map"></div>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfflUpmFRakYtgmogRkq0_60ZaT9JoYFI&callback=initMap">
-    </script>
+  <body ng-app="travelApp">
+
+
+    <ui-view></ui-view>
+
   </body>
 </html>
