@@ -1,20 +1,24 @@
 
-  <div class="row ">
-  <h1 class="center-align">Roadtripper!</h1>
-    <div class="col s12 l4 offset-l5 center-align">
+  <div class="row">
+  <h1 class="center-align logo-title">OpenRoad!</h1>
+  <h4 class="center-align logo-title">Organize and Document Your Roadtrip</h4>
+    <div class="col s12 l4 offset-l4 center-align">
       <form name="authForm" ng-controller="authCtrl" novalidate ng-submit="submit(user)" id="loginform">
 
-        <input type="text" name="username" ng-model="user.username" placeholder="username" required>
-        <input type="password" name ="password" ng-model="user.password" placeholder="password" required>
+        <input type="text" name="username" ng-model="user.username" placeholder="Username" required>
+        <input type="password" name ="password" ng-model="user.password" placeholder="Password" required>
         <input ng-if="state.name === 'register' && user.password"
         type="password" name="passwordConf"
         ng-model="user.passwordConfirm"
-        placeholder="confirm password" required>
+        placeholder="Confirm Password" required>
+        <div class="authbuttons">
+          
         <div>
-          <button id="register" type="submit" ng-disabled="(authForm.$invalid === true) || (user.password !== user.passwordConfirm && state.name==='register')">{{state.name}}</button>          
+          <button id="register" type="submit" ng-disabled="(authForm.$invalid === true) || (user.password !== user.passwordConfirm && state.name==='register')">{{state.name | titleCase}}</button>          
         </div>
         <div>
           <a ui-sref="login" ng-if="state.name === 'register'">Already Registered</a>          
+        </div>
         </div>
       </form>
         

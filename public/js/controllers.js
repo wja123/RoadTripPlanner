@@ -210,6 +210,12 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
 
 });
 
+app.filter("titleCase", function(){
+    return function(input){
+        return input.split('')[0].toUpperCase()+input.slice(1);
+    };
+});
+
 var mapStyle1 = [{
     "featureType": "all",
     "elementType": "labels.text.fill",

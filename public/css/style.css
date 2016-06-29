@@ -1,3 +1,10 @@
+ @import url(https://fonts.googleapis.com/css?family=Dancing+Script);
+
+ .logo-title{
+  font-family: 'Dancing Script', cursive;
+  color:#3BF;
+ }
+
  html, body {
   background-color:#222;
    height: 100%;
@@ -22,10 +29,15 @@
  }
 
  #loginform {
-  position: absolute;
-   z-index: 6;
-   /*width:50%;*/
-   background-color: blue;
+  z-index: 6;
+  margin:2%;
+  padding:2%;
+  border: 2px solid #3BF;
+  border-radius:15px;
+ }
+
+ #authbuttons{
+  margin:3%;
  }
 
  #map {
@@ -61,7 +73,6 @@
 }
 
 form {
-  margin-top:25%;
   color:#fff;
 }
 button#register {
