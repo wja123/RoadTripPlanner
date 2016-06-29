@@ -64,16 +64,15 @@ router.post('/directions', User.authMiddleware, function(req, res) {
 
     https.get('https://maps.googleapis.com/maps/api/directions/json?key=AIzaSyCz53GGUwzQowxo8-3JVmQ87X33hKFZG_U' + queryString, (response) => {
         console.log('statusCode: ', res.statusCode);
-        console.log('headers: ', res.headers);
 
         response.on('data', (d) => {
             console.log(d);
-            res.send(d);
+            return res.send(d);
         });
 
-    response.on('error', (e) => {
-        res.status(400).send(e);
-    });
+    // response.on('error', (e) => {
+    //     return res.status(400).send(e);
+    // });
 
 });
     });

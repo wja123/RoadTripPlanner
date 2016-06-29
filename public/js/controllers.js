@@ -42,6 +42,7 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
     var newDestinationObject = {};
     var dirData;
     $scope.markers = [];
+    $scope.addressList=[];
 
     $scope.map = new google.maps.Map(document.getElementById('map'), {
         zoom: 3,
@@ -55,25 +56,25 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
     $scope.$watch(function() {
         return addressArray;
     }, function(curr, prev) {
-        console.log(curr);
         $scope.addressList = curr;
+     initMap();
     });
 
 //THE DIRECTIONS RETURN THE DATA, HOWEVER, HAVING AN ISSUE 
 // WITH THE HEADERS, DO NOT UNCOMMENT PRIOR TO SUBMISSION
 
-    // $scope.$watch(function() {
-    //     return $scope.addressList;
-    // }, function(curr, prev) {
-    //     if (!dirData) {
-    //         UserFactory.getDirections(curr).then(function(res) {
-    //             console.log("Directions: ", res.data);
-    //             dirData = res.data;
-    //         }, function(err) {
-    //             console.log("Directions error: ", err);
-    //         });
-    //     };
-    // });
+    $scope.$watch(function() {
+        return $scope.addressList;
+    }, function(curr, prev) {
+        if (!dirData) {
+            UserFactory.getDirections(curr).then(function(res) {
+                console.log("Directions: ", res.data);
+                dirData = res.data;
+            }, function(err) {
+                console.log("Directions error: ", err);
+            });
+        };
+    });
 
 ////////////////////////////////////////////
     var geocoder = new google.maps.Geocoder();
@@ -84,7 +85,8 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
         UserFactory.getDestinations()
             .then(function(res) {
                 addressArray = res.data;
-                initMap();
+                console.log("addressArray: ", addressArray);
+                // initMap();
             }, function(err) {
                 if (err) console.error("get destinations err", err);
             });
@@ -93,13 +95,10 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
     function initMap() {
         address = address || [];
         console.log("address", address);
-
-
-
-        for (var i = 0; i < addressArray.length; i++) {
+        console.log(addressArray);
+        console.log($scope.addressList);
+                for (var i = 0; i < addressArray.length; i++) {
             address = addressArray[i].destination;
-            console.log("lat:", addressArray[i].lat);
-            console.log("lng:", addressArray[i].lng);
             var myLatlng = new google.maps.LatLng(addressArray[i].lat, addressArray[i].lng);
             var marker = new google.maps.Marker({
                 position: myLatlng,
@@ -131,7 +130,6 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
                     UserFactory.addDestinations(newDestinationObject)
                         .then(function(res) {
                             newDestinationObject = {};
-                            addressArray = res.data.destinations;
                             renderDestinations();
                         }, function(err) {
                             console.error("add destinations error: ", err);
@@ -155,6 +153,7 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
         newDestinationObject = angular.copy($scope.destinations);
         address = $scope.destinations.destination;
         $scope.destinations = {};
+        deleteMarkers();
         geocodeAddress(geocoder, $scope.map);
     }
 
@@ -183,6 +182,7 @@ app.controller('mapCtrl', function($scope, $state, MapFactory, UserFactory) {
                 console.log("remove dest res.data", res.data);
                 deleteMarkers();
                 renderDestinations();
+
             }, function(err) {
                 console.error("remove destination error: ", err);
             });

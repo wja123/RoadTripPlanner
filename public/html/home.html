@@ -1,8 +1,8 @@
-<div class="container">
-  <div class="row center-align">
 
-    <div class="col s12">
-      <form name="authForm" ng-controller="authCtrl" novalidate ng-submit="submit(user)" id="form">
+  <div class="row ">
+  <h1 class="center-align">Roadtripper!</h1>
+    <div class="col s12 l4 offset-l5 center-align">
+      <form name="authForm" ng-controller="authCtrl" novalidate ng-submit="submit(user)" id="loginform">
 
         <input type="text" name="username" ng-model="user.username" placeholder="username" required>
         <input type="password" name ="password" ng-model="user.password" placeholder="password" required>
@@ -10,14 +10,16 @@
         type="password" name="passwordConf"
         ng-model="user.passwordConfirm"
         placeholder="confirm password" required>
-
-        <button id="register" type="submit" ng-disabled="(authForm.$invalid === true) || (user.password !== user.passwordConfirm && state.name==='register')">{{state.name}}</button>
-        <a ui-sref="login" ng-if="state.name === 'register'">Already Registered</a>
-    
+        <div>
+          <button id="register" type="submit" ng-disabled="(authForm.$invalid === true) || (user.password !== user.passwordConfirm && state.name==='register')">{{state.name}}</button>          
+        </div>
+        <div>
+          <a ui-sref="login" ng-if="state.name === 'register'">Already Registered</a>          
+        </div>
       </form>
         
     </div>
 
   </div>
-</div>
+
 <!-- <div id="map"></div> -->
